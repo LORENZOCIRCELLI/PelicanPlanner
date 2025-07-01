@@ -4,6 +4,7 @@
 #include <time.h>
 #include <unistd.h>
 
+
 typedef struct{
 
     char character[30];
@@ -16,19 +17,39 @@ typedef struct{
 
 }Gift_List;
 
-void file_reader();
+typedef struct{
+
+    char name[30];
+    int base_value;
+    char season[20];
+    char seller[30];
+    int grow;
+    int regrow;
+
+    int silver_value;
+    int golden_value;
+    int iridium_value;
+    
+}Crop;
+
+Crop crops_List[100];
+Gift_List gifts_List[50];
+
+void gift_reader();
+void crop_reader();
 void list_all_gifts();
+void list_all_crops();
+void crop_farm_calculator();
 void search_gift();
 void main_menu();
-
-Gift_List gifts_List[50];
 
 
 
 int main(){
 
     char archive[] = "gifts.csv";
-    file_reader(archive);
+    gift_reader(archive);
+    crop_reader();
     system("clear");
     sleep(3);
 
@@ -40,7 +61,7 @@ int main(){
 
 }
 
-void file_reader(char archive[]){
+void gift_reader(char archive[]){
 
     FILE *file = fopen(archive, "r");
 
@@ -48,13 +69,13 @@ void file_reader(char archive[]){
 
     if(file == NULL){
 
-        printf("The program was enable to open the database");
+        printf("The program can't open the database");
         return;
 
     }
 
     char line[1000];
-    fgets(line, sizeof(line), file);  // Ignora o cabeçalho
+    fgets(line, sizeof(line), file);
 
     while (fgets(line, sizeof(line), file) != NULL) {
 
@@ -78,6 +99,52 @@ void file_reader(char archive[]){
     printf("O arquivo foi lido com sucesso!!");
 
     fclose(file);
+
+}
+
+void crop_reader(){
+
+    FILE *file = fopen("crops.csv", "r");
+
+    int i = 0;
+
+    if(file == NULL){
+
+        printf("The program can't open the database");
+        return;
+
+    }
+
+    char line[1000];
+    fgets(line, sizeof(line), file);
+
+    while(fgets(line, sizeof(line),file) != NULL){
+
+        char regrow_str[10];
+
+        if (sscanf(line, "%[^,],%d,%[^,],%[^,],%d,%[^,\n]", crops_List[i].name, 
+                &crops_List[i].base_value, crops_List[i].season, 
+                crops_List[i].seller, &crops_List[i].grow, regrow_str) == 6) {
+            
+            if (strlen(regrow_str) > 0)
+                crops_List[i].regrow = atoi(regrow_str);
+            else
+                crops_List[i].regrow = -1; 
+
+            float silver_result = crops_List[i].base_value * 1.25;
+            float gold_result = crops_List[i].base_value * 1.50;
+            float iridium_result = crops_List[i].base_value * 2;
+
+            crops_List[i].silver_value = (int) silver_result;
+            crops_List[i].golden_value = (int) gold_result;
+            crops_List[i].iridium_value = (int) iridium_result;
+
+            i++;
+        }   
+
+    }
+
+    printf("\nO arquivo foi lido com sucesso!");
 
 }
 
@@ -112,6 +179,102 @@ void list_all_gifts(){
 
 
 }
+
+void list_all_crops() {
+    int i = 0;
+
+    while (strcmp(crops_List[i].name, "") != 0) {
+        printf("--------------------------------------------------\n");
+        printf("Name of the crop:           %s\n", crops_List[i].name);
+        printf("Base Value:                 %d\n", crops_List[i].base_value);
+        printf("Season:                     %s\n", crops_List[i].season);
+        printf("Vendor:                     %s\n", crops_List[i].seller);
+        printf("Silver Value:               %d\n", crops_List[i].silver_value);
+        printf("Gold Value:                 %d\n", crops_List[i].golden_value);
+        printf("Iridium Value:              %d\n", crops_List[i].iridium_value);
+        printf("--------------------------------------------------\n");
+        i++;
+    }
+}
+
+void crop_farm_calculator(){
+    int restant_days = 0;
+
+    int harvests_possible = 0;
+    int i = 0, tiles = 0, day = 0;
+    printf("Insert the crop that you will use: ");
+    char name[20];
+    scanf(" %[^\n]", name);
+    printf("Insert the amount of tiles that you will plant: ");
+    scanf(" %d", &tiles);
+    printf("Insert the first day that you will plant: ");
+    scanf(" %d", &day);
+
+    
+    while(strcmp(crops_List[i].name,name)!=0){
+
+        i++;
+
+    }
+    printf("\n\nInformations:\n");
+    printf("--------------------------------------------------\n");
+    printf("Name of the crop:           %s\n", crops_List[i].name);
+    printf("Base Value:                 %d\n", crops_List[i].base_value);
+    printf("Season:                     %s\n", crops_List[i].season);
+    printf("Vendor:                     %s\n", crops_List[i].seller);
+    printf("Silver Value:               %d\n", crops_List[i].silver_value);
+    printf("Gold Value:                 %d\n", crops_List[i].golden_value);
+    printf("Iridium Value:              %d\n", crops_List[i].iridium_value);
+    printf("--------------------------------------------------\n");
+
+    if(crops_List[i].regrow == -1){
+        restant_days = 29 - day;
+        float float_harvests_possible = restant_days / crops_List[i].grow;
+        harvests_possible = (int) float_harvests_possible;
+
+        printf("--------------------------------------------------\n");
+        printf("Amount of harvests: %d\n", harvests_possible);
+        printf("Days to plant and harvest: \n");
+        int harvest_loops = day;
+        for(int j = 1 ; j <= harvests_possible; j++){
+            
+        printf("Plant: %d\n", harvest_loops);
+        harvest_loops += crops_List[i].grow;
+        printf("Harvest: %d\n", harvest_loops);
+
+        }
+
+
+    }
+    else{
+
+        restant_days = 28 - (day + crops_List[i].grow - 1);
+        harvests_possible = 1 + (restant_days / crops_List[i].regrow);  
+
+        printf("--------------------------------------------------\n");
+        printf("Amount of harvests: %d\n", harvests_possible);
+        printf("Days to plant and harvest: \n");
+        int harvest_loops = day;
+
+        printf("Plant: %d\n", harvest_loops);
+        
+        for(int j = 1 ; j <= harvests_possible; j++){
+            
+        harvest_loops += crops_List[i].regrow;
+        printf("Harvest: %d\n", harvest_loops);
+
+        }
+
+
+
+    }
+    printf("--------------------------------------------------\n");
+    printf("Profit(minimal): %d\n", crops_List[i].base_value * harvests_possible * tiles);
+    printf("--------------------------------------------------\n");
+
+
+}
+
 
 void search_gift(){
 
@@ -148,15 +311,16 @@ void search_gift(){
 }
 
 
+void profit_calculator(){
 
+    int var1 = 0;
+
+
+}
 
 void main_menu(){
 
     int option = 0;
-
-
-
-
 
     while(option != 9){
 
@@ -164,7 +328,7 @@ void main_menu(){
 
         printf("2. Show all characters: \n");
 
-        printf("3. Profit Calculator: \n");
+        printf("3. Show all crops: \n");
 
         printf("4. Tips: \n");
 
@@ -185,6 +349,12 @@ void main_menu(){
         case 2:
 
             list_all_gifts();
+
+            break;
+        
+        case 3:
+
+            list_all_crops();
 
             break;
 
