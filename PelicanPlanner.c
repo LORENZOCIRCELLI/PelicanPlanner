@@ -50,8 +50,6 @@ int main(){
     char archive[] = "gifts.csv";
     gift_reader(archive);
     crop_reader();
-    system("clear");
-    sleep(3);
 
     main_menu();
 
@@ -102,51 +100,61 @@ void gift_reader(char archive[]){
 
 }
 
-void crop_reader(){
-
+void crop_reader() {
     FILE *file = fopen("crops.csv", "r");
-
     int i = 0;
 
-    if(file == NULL){
-
-        printf("The program can't open the database");
+    if (file == NULL) {
+        printf("The program can't open the database\n");
         return;
-
     }
 
     char line[1000];
-    fgets(line, sizeof(line), file);
+    fgets(line, sizeof(line), file);  // Skip header
 
-    while(fgets(line, sizeof(line),file) != NULL){
+    while (fgets(line, sizeof(line), file) != NULL) {
+        char *token;
 
-        char regrow_str[10];
+        token = strtok(line, ",");
+        if (!token) continue;
+        strcpy(crops_List[i].name, token);
 
-        if (sscanf(line, "%[^,],%d,%[^,],%[^,],%d,%[^,\n]", crops_List[i].name, 
-                &crops_List[i].base_value, crops_List[i].season, 
-                crops_List[i].seller, &crops_List[i].grow, regrow_str) == 6) {
-            
-            if (strlen(regrow_str) > 0)
-                crops_List[i].regrow = atoi(regrow_str);
-            else
-                crops_List[i].regrow = -1; 
+        token = strtok(NULL, ",");
+        if (!token) continue;
+        crops_List[i].base_value = atoi(token);
 
-            float silver_result = crops_List[i].base_value * 1.25;
-            float gold_result = crops_List[i].base_value * 1.50;
-            float iridium_result = crops_List[i].base_value * 2;
+        token = strtok(NULL, ",");
+        if (!token) continue;
+        strcpy(crops_List[i].season, token);
 
-            crops_List[i].silver_value = (int) silver_result;
-            crops_List[i].golden_value = (int) gold_result;
-            crops_List[i].iridium_value = (int) iridium_result;
+        token = strtok(NULL, ",");
+        if (!token) continue;
+        strcpy(crops_List[i].seller, token);
 
-            i++;
-        }   
+        token = strtok(NULL, ",");
+        if (!token) continue;
+        crops_List[i].grow = atoi(token);
 
+        token = strtok(NULL, ",\n");
+        if (token && strlen(token) > 0)
+            crops_List[i].regrow = atoi(token);
+        else
+            crops_List[i].regrow = -1;
+
+        // Calcula valores de qualidade
+        crops_List[i].silver_value = (int)(crops_List[i].base_value * 1.25);
+        crops_List[i].golden_value = (int)(crops_List[i].base_value * 1.5);
+        crops_List[i].iridium_value = crops_List[i].base_value * 2;
+
+        printf("Crop name: %s\n", crops_List[i].name);
+
+        i++;
     }
 
-    printf("\nO arquivo foi lido com sucesso!");
-
+    printf("\nO arquivo foi lido com sucesso!\n");
+    fclose(file);
 }
+
 
 void list_all_gifts(){
 
@@ -186,12 +194,12 @@ void list_all_crops() {
     while (strcmp(crops_List[i].name, "") != 0) {
         printf("--------------------------------------------------\n");
         printf("Name of the crop:           %s\n", crops_List[i].name);
-        printf("Base Value:                 %d\n", crops_List[i].base_value);
+        printf("Base Value:                $%d\n", crops_List[i].base_value);
         printf("Season:                     %s\n", crops_List[i].season);
         printf("Vendor:                     %s\n", crops_List[i].seller);
-        printf("Silver Value:               %d\n", crops_List[i].silver_value);
-        printf("Gold Value:                 %d\n", crops_List[i].golden_value);
-        printf("Iridium Value:              %d\n", crops_List[i].iridium_value);
+        printf("Silver Value:              $%d\n", crops_List[i].silver_value);
+        printf("Gold Value:                $%d\n", crops_List[i].golden_value);
+        printf("Iridium Value:             $%d\n", crops_List[i].iridium_value);
         printf("--------------------------------------------------\n");
         i++;
     }
@@ -219,12 +227,12 @@ void crop_farm_calculator(){
     printf("\n\nInformations:\n");
     printf("--------------------------------------------------\n");
     printf("Name of the crop:           %s\n", crops_List[i].name);
-    printf("Base Value:                 %d\n", crops_List[i].base_value);
+    printf("Base Value:                $%d\n", crops_List[i].base_value);
     printf("Season:                     %s\n", crops_List[i].season);
     printf("Vendor:                     %s\n", crops_List[i].seller);
-    printf("Silver Value:               %d\n", crops_List[i].silver_value);
-    printf("Gold Value:                 %d\n", crops_List[i].golden_value);
-    printf("Iridium Value:              %d\n", crops_List[i].iridium_value);
+    printf("Silver Value:              $%d\n", crops_List[i].silver_value);
+    printf("Gold Value:                $%d\n", crops_List[i].golden_value);
+    printf("Iridium Value:             $%d\n", crops_List[i].iridium_value);
     printf("--------------------------------------------------\n");
 
     if(crops_List[i].regrow == -1){
@@ -239,7 +247,7 @@ void crop_farm_calculator(){
         for(int j = 1 ; j <= harvests_possible; j++){
             
         printf("Plant: %d\n", harvest_loops);
-        harvest_loops += crops_List[i].grow;
+        harvest_loops += crops_List[i].grow+1;
         printf("Harvest: %d\n", harvest_loops);
 
         }
@@ -269,7 +277,16 @@ void crop_farm_calculator(){
 
     }
     printf("--------------------------------------------------\n");
-    printf("Profit(minimal): %d\n", crops_List[i].base_value * harvests_possible * tiles);
+    float profit = crops_List[i].base_value * harvests_possible * tiles;
+    if(profit >= 1000){
+
+        profit = profit / 1000;
+        printf("Profit(minimal): $%.2fk\n", profit);
+
+    }
+    else{
+    printf("Profit(minimal): $%.2f\n", profit);
+    }
     printf("--------------------------------------------------\n");
 
 
@@ -355,6 +372,12 @@ void main_menu(){
         case 3:
 
             list_all_crops();
+
+            break;
+
+        case 4:
+
+            crop_farm_calculator();
 
             break;
 
