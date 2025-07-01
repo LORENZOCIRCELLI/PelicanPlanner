@@ -1,0 +1,35 @@
+Crop,BaseValue,Season,BuyLocation,grow,regrow
+Parsnip,35,Spring,Pierre's General Store,4,
+Potato,80,Spring,Pierre's General Store,6,
+Cauliflower,175,Spring,Pierre's General Store,12,
+Green Bean,40,Spring,Pierre's General Store,10,3
+Kale,110,Spring,Pierre's General Store,6,
+Garlic,60,Spring,Pierre's (Year 2+),4,
+Strawberry,120,Spring,Spring Egg Festival,8,
+Blue Jazz,50,Spring,Pierre's General Store,7,
+Tulip,30,Spring,Pierre's General Store,6,
+Coffee Bean,15,Spring,Traveling Cart or Dust Sprites (drop),10,2
+Melon,250,Summer,Pierre's General Store,12,
+Tomato,60,Summer,Pierre's General Store,11,4
+Blueberry,80,Summer,Pierre's General Store,13,4
+Hot Pepper,40,Summer,Pierre's General Store,5,4
+Corn,50,Summer,Pierre's General Store,14,4
+Radish,90,Summer,Pierre's General Store,6,
+Wheat,25,Summer,Pierre's General Store,4,
+Hops,25,Summer,Pierre's General Store,11,1
+Poppy,140,Summer,Pierre's General Store,7,
+Spangle,90,Summer,Pierre's General Store,8,
+Red Cabbage,260,Summer,Pierre's (Year 2+),9,
+Pumpkin,320,Fall,Pierre's General Store,13,
+Yam,160,Fall,Pierre's General Store,10,
+Eggplant,60,Fall,Pierre's General Store,5,5
+Cranberries,75,Fall,Pierre's General Store,7,5
+Amaranth,150,Fall,Pierre's General Store,7,
+Grape,80,Fall,Pierre's General Store,10,4
+Artichoke,160,Fall,Pierre's (Year 2+),8,
+Bok Choy,80,Fall,Pierre's General Store,6,
+Fairy Rose,290,Fall,Pierre's General Store,12,
+Sunflower,80,Fall,Pierre's General Store,8,
+Beet,100,Fall,Desert Oasis (Sandy),6,
+Ancient Fruit,550,Spring Summer Fall,Greenhouse or Rare Drop,28,7
+Sweet Gem Berry,3000,Fall,Traveling Cart,24,
