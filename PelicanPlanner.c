@@ -228,7 +228,7 @@ void crop_farm_calculator(){
     printf("--------------------------------------------------\n");
 
     if(crops_List[i].regrow == -1){
-        restant_days = 29 - day;
+        restant_days = 28 - day;
         float float_harvests_possible = restant_days / crops_List[i].grow;
         harvests_possible = (int) float_harvests_possible;
 
@@ -248,21 +248,21 @@ void crop_farm_calculator(){
     }
     else{
 
-        restant_days = 28 - (day + crops_List[i].grow - 1);
-        harvests_possible = 1 + (restant_days / crops_List[i].regrow);  
+        restant_days = 28 - (day + crops_List[i].grow);
+        float float_harvests_possible = restant_days / crops_List[i].regrow;
+        harvests_possible = 1+ float_harvests_possible;  
 
         printf("--------------------------------------------------\n");
         printf("Amount of harvests: %d\n", harvests_possible);
         printf("Days to plant and harvest: \n");
-        int harvest_loops = day;
+        int harvest_loops = day+crops_List[i].grow;
 
-        printf("Plant: %d\n", harvest_loops);
-        
+        printf("Plant: %d\n", day);
+
         for(int j = 1 ; j <= harvests_possible; j++){
             
-        harvest_loops += crops_List[i].regrow;
         printf("Harvest: %d\n", harvest_loops);
-
+        harvest_loops += crops_List[i].regrow;
         }
 
 
