@@ -382,7 +382,7 @@ void main_menu(){
             break;
 
         case 9:
-
+            option = 9;
             break;
 
 
