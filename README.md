@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" width="150"/>
+</p>
+
 # 🌾 Pelican Planner
 
 A friendly and powerful assistant for **Stardew Valley** players who want to optimize their farm, relationships, and profits.  
