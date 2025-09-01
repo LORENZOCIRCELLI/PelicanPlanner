@@ -1,2 +1,6 @@
-PelicanPlanner.exe
-PelicanPlanner
+*.exe
+*.obj
+*.o
+*.log
+/build/
+/old/
