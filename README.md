@@ -27,5 +27,5 @@ Contribuições são bem-vindas! Abra issues ou envie pull requests com sugestõ
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a Licença MIT. Veja o arquivo LICENSE
- para mais detalhes.
+Este projeto está licenciado sob a Licença GPL-3.0. Veja o arquivo LICENSE
+para mais detalhes.
