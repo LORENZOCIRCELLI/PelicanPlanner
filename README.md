@@ -4,19 +4,28 @@
 
 # 🌾 Pelican Planner
 
-A friendly and powerful assistant for **Stardew Valley** players who want to optimize their farm, relationships, and profits.  
-Track favorite gifts, calculate crop profits, and make smart decisions as you play through the seasons of Pelican Town.
+Um assistente amigável e poderoso para jogadores de **Stardew Valley** que querem otimizar a fazenda, os relacionamentos e os lucros.  
+Acompanhe os presentes favoritos, calcule o lucro das plantações e tome decisões inteligentes enquanto joga pelas estações de Pelican Town.
 
-> 🎮 Built by a fan, expanded as I play. The more I discover, the more features I add!
+> 🎮 Criado por um fã e expandido conforme eu jogo. Quanto mais descubro, mais recursos adiciono!
+
+---
+
+## 📦 Funcionalidades
+
+- 🧡 **Preferências de presentes dos moradores**: Saiba o que cada personagem ama, gosta, não gosta ou odeia.  
+- 🌽 **Calculadora de lucro de plantações**: Inclui efeitos de fertilizante, crescimento contínuo e datas de plantio.  
+- 📊 **Mais ferramentas em breve**: Pontos de pesca, conjuntos de coleções, receitas e muito mais!
 
 ---
 
-## 📦 Features
+## 💡 Contribuição
 
-- 🧡 Villager gift preferences (loved, liked, disliked, hated)
-- 🌽 Crop profit calculator (including fertilizer, regrowth, and planting date)
-- 🗓 Seasonal planning support
-- 🧠 Simple and clean UI for quick lookups
-- 📊 More tools coming soon: fishing spots, bundles, recipes...
+Contribuições são bem-vindas! Abra issues ou envie pull requests com sugestões e melhorias.
 
 ---
+
+## 📄 Licença
+
+Este projeto está licenciado sob a Licença MIT. Veja o arquivo LICENSE
+ para mais detalhes.
